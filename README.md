@@ -2,7 +2,9 @@
 
 **AI & ML Specialist**
 
-I recently wrapped up my B.Tech in Computer Science Engineering (AI & ML) at Anurag University, and I'm incredibly passionate about diving into the world of open-source technology. Based in Hyderabad, my core focus is on building scalable agentic workflows, harnessing the power of LLMs, and developing practical, real-world AI solutions. 
+I recently wrapped up my B.Tech in Computer Science Engineering (AI & ML) at Anurag University, and I'm incredibly passionate about diving into the world of open-source technology. Based in Hyderabad, I'm focused on building intelligent systems through advanced LLM applications and open-source contributions.
+
+### ✨ [View My Portfolio](https://gajellijoeledwin.github.io)
 
 ### What I'm Up To
 *  Researching and developing multi-agent systems and advanced LLM applications (specifically working with Claude and AWS Bedrock).
@@ -15,7 +17,7 @@ I recently wrapped up my B.Tech in Computer Science Engineering (AI & ML) at Anu
 * **[LoanVerse AI](https://github.com/gajellijoeledwin):** An agentic sales workforce solution built to streamline and automate financial workflows.
 
 ###  Tech Stack
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![C++](https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white) ![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white) ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white) ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black) ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white) ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white) ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white) 
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![C++](https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white) ![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white) ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 
 ###  GitHub Stats
 ![](https://streak-stats.demolab.com/?user=gajellijoeledwin&theme=tokyonight&hide_border=false)<br/>
