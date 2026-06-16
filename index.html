@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joel | Data Science Student Researcher</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #050505; }
+        
+        /* Animated Background Blobs */
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .animate-blob { animation: blob 7s infinite; }
+        .animation-delay-2000 { animation-delay: 2s; }
+        
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body class="text-slate-300 antialiased selection:bg-emerald-500/30 selection:text-emerald-200 relative overflow-x-hidden">
+
+    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none flex justify-center items-center">
+        <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-emerald-600/20 rounded-full mix-blend-screen filter blur-[128px] animate-blob"></div>
+        <div class="absolute top-[20%] right-[-10%] w-96 h-96 bg-cyan-600/20 rounded-full mix-blend-screen filter blur-[128px] animate-blob animation-delay-2000"></div>
+    </div>
+
+    <nav class="fixed w-full z-50 glass-card border-x-0 border-t-0">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-white font-black tracking-tighter text-2xl">JOEL<span class="text-emerald-500">.</span></a>
+            <div class="space-x-8 text-sm font-medium hidden md:block">
+                <a href="#about" class="hover:text-emerald-400 transition-colors">About</a>
+                <a href="#projects" class="hover:text-emerald-400 transition-colors">Projects</a>
+                <a href="https://github.com/gajellijoeledwin" target="_blank" class="hover:text-emerald-400 transition-colors">GitHub</a>
+            </div>
+            <a href="https://www.linkedin.com/in/gajelli-joel-edwin/" target="_blank" class="hidden md:inline-flex items-center justify-center px-5 py-2 text-sm font-medium text-black bg-white rounded-full hover:bg-emerald-400 transition-all">
+                Let's Connect
+            </a>
+        </div>
+    </nav>
+
+    <main class="relative z-10 pt-40 pb-20 md:pt-52 md:pb-32 px-6">
+        <div class="max-w-6xl mx-auto flex flex-col items-start">
+            <div class="inline-flex items-center px-4 py-2 mb-8 rounded-full glass-card text-emerald-400 text-sm font-semibold tracking-wide">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 mr-3 animate-pulse"></span>
+                Open Source & AI/ML
+            </div>
+            <h1 class="text-5xl md:text-8xl font-black text-white tracking-tight mb-8 leading-[1.1]">
+                Engineering <br />
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-500">
+                    Intelligent Systems.
+                </span>
+            </h1>
+            <p class="text-lg md:text-2xl text-slate-400 max-w-2xl mb-12 leading-relaxed font-light">
+                I'm a Data Science Student Researcher and recent grad, diving headfirst into open-source technology, agentic workflows, and scalable LLM solutions.
+            </p>
+            <div class="flex gap-4">
+                <a href="#projects" class="bg-white text-black px-8 py-4 rounded-full font-bold hover:bg-emerald-400 transition-all duration-300 shadow-[0_0_40px_rgba(52,211,153,0.3)] hover:shadow-[0_0_60px_rgba(52,211,153,0.5)]">
+                    Explore My Work
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <section id="about" class="relative z-10 py-24 px-6">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-12 gap-12 items-center">
+            <div class="md:col-span-7">
+                <h2 class="text-3xl md:text-5xl font-bold text-white mb-8">Bridging Research & Reality</h2>
+                <div class="space-y-6 text-slate-400 text-lg leading-relaxed font-light">
+                    <p>
+                        Having just wrapped up my B.Tech in CSE (AI & ML) at Anurag University, my focus is shifting heavily toward contributing to open-source technology. I specialize in the intersection of advanced LLM applications, multi-agent systems, and scalable infrastructure.
+                    </p>
+                    <p>
+                        I lead <strong>Team Aivoria</strong> in national innovation challenges like the AMD Slingshot Hackathon and Google Gen AI Exchange. My home base is my i7 ROG Strix G16, configured for remote development and optimized for building at scale.
+                    </p>
+                    <p>
+                        When I'm not pushing code, I'm managing live audio engineering setups, optimizing broadcast media, or geeking out over SUV touring specs.
+                    </p>
+                </div>
+            </div>
+            <div class="md:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="glass-card p-6 rounded-2xl">
+                    <div class="w-12 h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center mb-4 text-emerald-400">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h3 class="text-white font-bold mb-1">AI/ML Stack</h3>
+                    <p class="text-sm text-slate-500">Claude, Agentic Workflows, Python</p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl">
+                    <div class="w-12 h-12 bg-cyan-500/20 rounded-xl flex items-center justify-center mb-4 text-cyan-400">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                    </div>
+                    <h3 class="text-white font-bold mb-1">Systems</h3>
+                    <p class="text-sm text-slate-500">AWS Bedrock, Linux, Remote Compute</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="relative z-10 py-24 px-6">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-12">Featured Builds</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                
+                <div class="glass-card rounded-3xl p-8 group">
+                    <div class="flex justify-between items-start mb-8">
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-400 to-cyan-500 flex items-center justify-center shadow-lg">
+                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <span class="text-emerald-400 text-xs font-bold tracking-wider uppercase bg-emerald-500/10 px-3 py-1.5 rounded-full border border-emerald-500/20">Multi-Agent</span>
+                    </div>
+                    <h3 class="text-3xl font-bold text-white mb-4">NYAY</h3>
+                    <p class="text-slate-400 mb-8 leading-relaxed font-light">
+                        A multi-agent system designed to automate grievance filing and legal petition generation directly via WhatsApp, running on AWS Bedrock to streamline legal accessibility.
+                    </p>
+                    <a href="https://github.com/gajellijoeledwin" class="text-white font-medium inline-flex items-center group-hover:text-emerald-400 transition-colors">
+                        View Source <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
+                    </a>
+                </div>
+
+                <div class="glass-card rounded-3xl p-8 group">
+                    <div class="flex justify-between items-start mb-8">
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg">
+                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <span class="text-blue-400 text-xs font-bold tracking-wider uppercase bg-blue-500/10 px-3 py-1.5 rounded-full border border-blue-500/20">FinTech</span>
+                    </div>
+                    <h3 class="text-3xl font-bold text-white mb-4">LoanVerse AI</h3>
+                    <p class="text-slate-400 mb-8 leading-relaxed font-light">
+                        An agentic sales workforce solution built to automate complex financial workflows and assist in dynamic client interactions at scale.
+                    </p>
+                    <a href="https://github.com/gajellijoeledwin" class="text-white font-medium inline-flex items-center group-hover:text-blue-400 transition-colors">
+                        View Source <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="relative z-10 py-12 px-6 mt-12 border-t border-white/5">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="text-slate-500 text-sm font-light">© 2026 Joel Edwin. Building in the open.</p>
+            <div class="flex space-x-8 font-medium text-sm">
+                <a href="https://github.com/gajellijoeledwin" target="_blank" class="text-slate-400 hover:text-white transition-colors">GitHub</a>
+                <a href="https://www.linkedin.com/in/gajelli-joel-edwin/" target="_blank" class="text-slate-400 hover:text-white transition-colors">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
