@@ -1,168 +1,664 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joel | Data Science Student Researcher</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; background-color: #050505; }
-        
-        /* Animated Background Blobs */
-        @keyframes blob {
-            0% { transform: translate(0px, 0px) scale(1); }
-            33% { transform: translate(30px, -50px) scale(1.1); }
-            66% { transform: translate(-20px, 20px) scale(0.9); }
-            100% { transform: translate(0px, 0px) scale(1); }
-        }
-        .animate-blob { animation: blob 7s infinite; }
-        .animation-delay-2000 { animation-delay: 2s; }
-        
-        /* Glassmorphism Cards */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
-        }
-        .glass-card:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transform: translateY(-5px);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Name - Developer Portfolio</title>
+  <style>
+    :root {
+      --bg:           #05050f;
+      --bg-card:      #0d0d1e;
+      --bg-card2:     #131328;
+      --border:       #2a1f6b;
+      --border-light: #3d2d8f;
+      --primary:      #9b2fff;
+      --primary-lt:   #b668ff;
+      --secondary:    #5060ff;
+      --green:        #00e87a;
+      --cyan:         #00d4ff;
+      --text:         #e2e8f0;
+      --muted:        #7c85a2;
+      --dim:          #4a5578;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Courier New', 'Lucida Console', monospace;
+      overflow-x: hidden;
+    }
+
+    /* ─────────────────────────────────────────
+       BOOT SCREEN
+    ───────────────────────────────────────── */
+    #boot {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 9999;
+      padding: 28px 44px;
+      display: flex;
+      flex-direction: column;
+      transition: opacity 0.9s ease;
+    }
+    #boot.fade-out { opacity: 0; pointer-events: none; }
+
+    #boot-lines {
+      flex: 1;
+      overflow: hidden;
+      transition: opacity 0.5s ease;
+    }
+    #boot-lines.dim { opacity: 0.12; }
+
+    .bl {
+      font-size: 12.5px;
+      line-height: 1.7;
+      color: #00e87a;
+      opacity: 0;
+      animation: lineIn 0.18s ease forwards;
+    }
+    .bl .ts  { color: #005530; }
+    .bl .ok  { color: #00e87a; }
+    .bl .warn{ color: #f59e0b; }
+    .bl .brand { color: #b668ff; font-weight: bold; }
+
+    @keyframes lineIn {
+      from { opacity: 0; transform: translateX(-10px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    #os-logo {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.9s ease;
+      pointer-events: none;
+    }
+    #os-logo.visible { opacity: 1; }
+
+    #os-logo .logo-svg {
+      width: 170px;
+      height: 170px;
+      filter: drop-shadow(0 0 18px rgba(155,47,255,0.55));
+      animation: none;
+    }
+    #os-logo.pulse .logo-svg {
+      animation: logoPulse 1.3s ease-in-out infinite;
+    }
+    @keyframes logoPulse {
+      0%,100% { filter: drop-shadow(0 0 14px rgba(155,47,255,0.5))  drop-shadow(0 0 38px rgba(80,96,255,0.25)); }
+      50%     { filter: drop-shadow(0 0 32px rgba(155,47,255,0.92)) drop-shadow(0 0 72px rgba(80,96,255,0.55)); }
+    }
+
+    #os-logo-label {
+      margin-top: 22px;
+      color: #b668ff;
+      font-size: 13px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 0.5s ease 0.5s;
+    }
+    #os-logo.visible #os-logo-label { opacity: 1; }
+
+    /* ─────────────────────────────────────────
+       MAIN PAGE
+    ───────────────────────────────────────── */
+    #main {
+      display: none;
+      min-height: 100vh;
+      animation: mainIn 0.85s ease forwards;
+    }
+    @keyframes mainIn { from { opacity:0 } to { opacity:1 } }
+
+    /* scrollbar */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
+
+    /* ── Navbar ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(5,5,15,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 58px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .nav-logo .logo-svg { width: 34px; height: 34px; }
+    .nav-logo span { font-size: 15px; color: var(--primary-lt); font-weight: bold; letter-spacing: 0.04em; }
+
+    .nav-links { display: flex; gap: 30px; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 12.5px; transition: color 0.2s; letter-spacing: 0.06em; }
+    .nav-links a:hover { color: var(--primary-lt); }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 96px 48px 72px;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    .hero-prompt { color: var(--green); font-size: 13px; margin-bottom: 14px; }
+    .hero-prompt::before { content: '$ '; color: var(--primary); }
+
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.15; color: var(--text); margin-bottom: 8px; }
+    .hero h1 span { color: var(--primary); }
+
+    .hero-title { font-size: 1.05rem; color: var(--cyan); margin-bottom: 22px; letter-spacing: 0.06em; }
+    .hero-location { font-size: 0.85rem; color: var(--muted); margin-bottom: 22px; }
+    .hero-location::before { content: '📍 '; }
+
+    .hero-desc {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.93rem;
+      line-height: 1.8;
+      color: var(--muted);
+      max-width: 660px;
+    }
+    .hero-cta { margin-top: 30px; display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .btn {
+      padding: 9px 22px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 12.5px;
+      text-decoration: none;
+      transition: all 0.2s;
+      letter-spacing: 0.05em;
+    }
+    .btn-primary { background: var(--primary); color: #fff; border: 1px solid var(--primary); }
+    .btn-primary:hover { background: var(--primary-lt); border-color: var(--primary-lt); box-shadow: 0 0 22px rgba(155,47,255,0.45); }
+    .btn-outline { background: transparent; color: var(--primary-lt); border: 1px solid var(--border-light); }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* ── Sections ── */
+    section {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 56px 48px;
+      border-top: 1px solid var(--border);
+    }
+    .section-header { margin-bottom: 36px; }
+    .section-label {
+      font-size: 10.5px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 7px;
+    }
+    .section-label::before { content: '// '; color: var(--dim); }
+    .section-title { font-size: 1.5rem; color: var(--text); }
+
+    /* ── About ── */
+    .about-text {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.93rem;
+      line-height: 1.85;
+      color: var(--muted);
+      max-width: 720px;
+    }
+    .about-text p + p { margin-top: 14px; }
+    .about-text strong { color: var(--text); }
+
+    /* ── Experience ── */
+    .exp-list { display: flex; flex-direction: column; gap: 22px; }
+
+    .exp-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--primary);
+      border-radius: 6px;
+      padding: 22px 26px;
+      transition: border-left-color 0.2s, box-shadow 0.2s;
+    }
+    .exp-card:hover {
+      border-left-color: var(--primary-lt);
+      box-shadow: 0 0 28px rgba(155,47,255,0.09);
+    }
+
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .exp-role { font-size: 1rem; color: var(--text); font-weight: bold; }
+    .exp-period {
+      font-size: 11px;
+      color: var(--green);
+      padding: 3px 8px;
+      background: rgba(0,232,122,0.07);
+      border: 1px solid rgba(0,232,122,0.2);
+      border-radius: 3px;
+      white-space: nowrap;
+      letter-spacing: 0.04em;
+    }
+    .exp-company { font-size: 0.88rem; color: var(--primary-lt); margin-bottom: 12px; }
+    .exp-desc {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.86rem;
+      line-height: 1.72;
+      color: var(--muted);
+    }
+    .exp-bullets { margin-top: 10px; padding-left: 16px; }
+    .exp-bullets li {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.84rem;
+      line-height: 1.65;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .exp-bullets li strong { color: var(--text); }
+    .exp-tags { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px; }
+
+    .tag {
+      font-size: 11px;
+      padding: 2px 9px;
+      border-radius: 20px;
+      background: rgba(155,47,255,0.09);
+      border: 1px solid rgba(155,47,255,0.24);
+      color: var(--primary-lt);
+      letter-spacing: 0.03em;
+    }
+
+    /* ── Skills ── */
+    .skills-grid { display: flex; flex-direction: column; gap: 18px; }
+    .skill-group-label {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+    .skill-group-label::before { content: '> '; color: var(--dim); }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+    .skill-tag {
+      font-size: 11.5px;
+      padding: 4px 11px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: var(--bg-card);
+      transition: all 0.2s;
+      font-family: 'Courier New', monospace;
+    }
+    .skill-tag:hover { border-color: var(--primary); color: var(--primary-lt); background: rgba(155,47,255,0.08); }
+    .skill-tag.featured { border-color: rgba(155,47,255,0.38); color: var(--primary-lt); background: rgba(155,47,255,0.09); }
+
+    /* ── Contact ── */
+    .contact-grid { display: flex; flex-wrap: wrap; gap: 14px; }
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 22px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+    .contact-card:hover { border-color: var(--primary); box-shadow: 0 0 22px rgba(155,47,255,0.15); }
+    .contact-card svg { width: 22px; height: 22px; }
+    .contact-info small { display: block; font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+    .contact-info span  { font-size: 13px; color: var(--primary-lt); }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 36px 48px;
+      border-top: 1px solid var(--border);
+      font-size: 11.5px;
+      color: var(--dim);
+    }
+    footer span { color: var(--primary); }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      nav, section, .hero { padding-left: 20px; padding-right: 20px; }
+      .nav-links { display: none; }
+      #boot { padding: 18px 20px; }
+      .bl { font-size: 10.5px; }
+    }
+  </style>
 </head>
-<body class="text-slate-300 antialiased selection:bg-emerald-500/30 selection:text-emerald-200 relative overflow-x-hidden">
+<body>
 
-    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none flex justify-center items-center">
-        <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-emerald-600/20 rounded-full mix-blend-screen filter blur-[128px] animate-blob"></div>
-        <div class="absolute top-[20%] right-[-10%] w-96 h-96 bg-cyan-600/20 rounded-full mix-blend-screen filter blur-[128px] animate-blob animation-delay-2000"></div>
+<!-- ════════════════════════════════════════
+     BOOT SCREEN
+════════════════════════════════════════ -->
+<div id="boot">
+  <div id="boot-lines"></div>
+
+  <div id="os-logo">
+    <!-- Penrose Impossible Triangle – OS Logo -->
+    <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+      <defs>
+        <linearGradient id="pg-boot" x1="30%" y1="5%" x2="70%" y2="95%">
+          <stop offset="0%"   stop-color="#9B2FFF"/>
+          <stop offset="100%" stop-color="#5060FF"/>
+        </linearGradient>
+      </defs>
+      <polygon points="250,60 60,425 153,375 250,190"   fill="white" stroke="url(#pg-boot)" stroke-width="9" stroke-linejoin="round"/>
+      <polygon points="250,60 250,190 347,375 440,425"  fill="white" stroke="url(#pg-boot)" stroke-width="9" stroke-linejoin="round"/>
+      <polygon points="60,425 440,425 347,375 153,375"  fill="white" stroke="url(#pg-boot)" stroke-width="9" stroke-linejoin="round"/>
+      <polygon points="250,190 153,375 347,375" fill="url(#pg-boot)"/>
+    </svg>
+    <div id="os-logo-label">Developer OS &nbsp;v1.0.0</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     MAIN PORTFOLIO PAGE
+════════════════════════════════════════ -->
+<div id="main">
+
+  <!-- Navbar -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+        <defs>
+          <linearGradient id="pg-nav" x1="30%" y1="5%" x2="70%" y2="95%">
+            <stop offset="0%"   stop-color="#9B2FFF"/>
+            <stop offset="100%" stop-color="#5060FF"/>
+          </linearGradient>
+        </defs>
+        <polygon points="250,60 60,425 153,375 250,190"   fill="white" stroke="url(#pg-nav)" stroke-width="9" stroke-linejoin="round"/>
+        <polygon points="250,60 250,190 347,375 440,425"  fill="white" stroke="url(#pg-nav)" stroke-width="9" stroke-linejoin="round"/>
+        <polygon points="60,425 440,425 347,375 153,375"  fill="white" stroke="url(#pg-nav)" stroke-width="9" stroke-linejoin="round"/>
+        <polygon points="250,190 153,375 347,375" fill="url(#pg-nav)"/>
+      </svg>
+      <span>dev@portfolio:~$</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">about</a></li>
+      <li><a href="#experience">experience</a></li>
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-prompt">whoami</div>
+    <h1>Your <span>Name</span></h1>
+    <div class="hero-title">Full Stack Developer & Creator</div>
+    <div class="hero-location">City, State</div>
+    <p class="hero-desc">
+      I build elegant, scalable web applications that solve real problems.
+      With expertise in modern frameworks and a passion for clean code,
+      I transform ideas into production-ready solutions.
+    </p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn btn-primary">./contact.sh</a>
+      <a href="#experience" class="btn btn-outline">cat experience.json</a>
     </div>
+  </div>
 
-    <nav class="fixed w-full z-50 glass-card border-x-0 border-t-0">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-white font-black tracking-tighter text-2xl">JOEL<span class="text-emerald-500">.</span></a>
-            <div class="space-x-8 text-sm font-medium hidden md:block">
-                <a href="#about" class="hover:text-emerald-400 transition-colors">About</a>
-                <a href="#projects" class="hover:text-emerald-400 transition-colors">Projects</a>
-                <a href="https://github.com/gajellijoeledwin" target="_blank" class="hover:text-emerald-400 transition-colors">GitHub</a>
-            </div>
-            <a href="https://www.linkedin.com/in/gajelli-joel-edwin/" target="_blank" class="hidden md:inline-flex items-center justify-center px-5 py-2 text-sm font-medium text-black bg-white rounded-full hover:bg-emerald-400 transition-all">
-                Let's Connect
-            </a>
+  <!-- ── About ── -->
+  <section id="about">
+    <div class="section-header">
+      <div class="section-label">about</div>
+      <h2 class="section-title">$ cat about.md</h2>
+    </div>
+    <div class="about-text">
+      <p>
+        I'm a passionate developer focused on building <strong>high-quality software</strong> that makes a difference.
+        My journey spans full-stack development, DevOps, and cloud architecture,
+        always with a focus on scalability, security, and user experience.
+      </p>
+      <p>
+        Currently exploring <strong>emerging technologies</strong> and best practices in modern web development.
+        I love collaborating with teams, mentoring others, and contributing to open-source projects.
+      </p>
+      <p>
+        When I'm not coding, you'll find me learning new technologies, contributing to communities,
+        or exploring innovative approaches to solve complex problems.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── Experience ── -->
+  <section id="experience">
+    <div class="section-header">
+      <div class="section-label">experience</div>
+      <h2 class="section-title">$ cat experience.json</h2>
+    </div>
+    <div class="exp-list">
+
+      <!-- Experience Card 1 -->
+      <div class="exp-card">
+        <div class="exp-header">
+          <div class="exp-role">Software Engineer</div>
+          <div class="exp-period">Jan 2024 – Present · 1+ yr</div>
         </div>
-    </nav>
-
-    <main class="relative z-10 pt-40 pb-20 md:pt-52 md:pb-32 px-6">
-        <div class="max-w-6xl mx-auto flex flex-col items-start">
-            <div class="inline-flex items-center px-4 py-2 mb-8 rounded-full glass-card text-emerald-400 text-sm font-semibold tracking-wide">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 mr-3 animate-pulse"></span>
-                Open Source & AI/ML
-            </div>
-            <h1 class="text-5xl md:text-8xl font-black text-white tracking-tight mb-8 leading-[1.1]">
-                Engineering <br />
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-500">
-                    Intelligent Systems.
-                </span>
-            </h1>
-            <p class="text-lg md:text-2xl text-slate-400 max-w-2xl mb-12 leading-relaxed font-light">
-                I'm a Data Science Student Researcher and recent grad, diving headfirst into open-source technology, agentic workflows, and scalable LLM solutions.
-            </p>
-            <div class="flex gap-4">
-                <a href="#projects" class="bg-white text-black px-8 py-4 rounded-full font-bold hover:bg-emerald-400 transition-all duration-300 shadow-[0_0_40px_rgba(52,211,153,0.3)] hover:shadow-[0_0_60px_rgba(52,211,153,0.5)]">
-                    Explore My Work
-                </a>
-            </div>
+        <div class="exp-company">Company Name · Full-time</div>
+        <div class="exp-desc">
+          Building scalable web applications and leading technical initiatives.
         </div>
-    </main>
-
-    <section id="about" class="relative z-10 py-24 px-6">
-        <div class="max-w-6xl mx-auto grid md:grid-cols-12 gap-12 items-center">
-            <div class="md:col-span-7">
-                <h2 class="text-3xl md:text-5xl font-bold text-white mb-8">Bridging Research & Reality</h2>
-                <div class="space-y-6 text-slate-400 text-lg leading-relaxed font-light">
-                    <p>
-                        Having just wrapped up my B.Tech in CSE (AI & ML) at Anurag University, my focus is shifting heavily toward contributing to open-source technology. I specialize in the intersection of advanced LLM applications, multi-agent systems, and scalable infrastructure.
-                    </p>
-                    <p>
-                        I lead <strong>Team Aivoria</strong> in national innovation challenges like the AMD Slingshot Hackathon and Google Gen AI Exchange. My home base is my i7 ROG Strix G16, configured for remote development and optimized for building at scale.
-                    </p>
-                    <p>
-                        When I'm not pushing code, I'm managing live audio engineering setups, optimizing broadcast media, or geeking out over SUV touring specs.
-                    </p>
-                </div>
-            </div>
-            <div class="md:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div class="glass-card p-6 rounded-2xl">
-                    <div class="w-12 h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center mb-4 text-emerald-400">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    </div>
-                    <h3 class="text-white font-bold mb-1">AI/ML Stack</h3>
-                    <p class="text-sm text-slate-500">Claude, Agentic Workflows, Python</p>
-                </div>
-                <div class="glass-card p-6 rounded-2xl">
-                    <div class="w-12 h-12 bg-cyan-500/20 rounded-xl flex items-center justify-center mb-4 text-cyan-400">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                    </div>
-                    <h3 class="text-white font-bold mb-1">Systems</h3>
-                    <p class="text-sm text-slate-500">AWS Bedrock, Linux, Remote Compute</p>
-                </div>
-            </div>
+        <ul class="exp-bullets">
+          <li><strong>Achievement 1:</strong> Describe what you accomplished</li>
+          <li><strong>Achievement 2:</strong> Describe another achievement</li>
+          <li><strong>Achievement 3:</strong> One more key accomplishment</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="tag">React</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">AWS</span>
         </div>
-    </section>
+      </div>
 
-    <section id="projects" class="relative z-10 py-24 px-6">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl md:text-5xl font-bold text-white mb-12">Featured Builds</h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                
-                <div class="glass-card rounded-3xl p-8 group">
-                    <div class="flex justify-between items-start mb-8">
-                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-400 to-cyan-500 flex items-center justify-center shadow-lg">
-                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        </div>
-                        <span class="text-emerald-400 text-xs font-bold tracking-wider uppercase bg-emerald-500/10 px-3 py-1.5 rounded-full border border-emerald-500/20">Multi-Agent</span>
-                    </div>
-                    <h3 class="text-3xl font-bold text-white mb-4">NYAY</h3>
-                    <p class="text-slate-400 mb-8 leading-relaxed font-light">
-                        A multi-agent system designed to automate grievance filing and legal petition generation directly via WhatsApp, running on AWS Bedrock to streamline legal accessibility.
-                    </p>
-                    <a href="https://github.com/gajellijoeledwin" class="text-white font-medium inline-flex items-center group-hover:text-emerald-400 transition-colors">
-                        View Source <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
-                    </a>
-                </div>
-
-                <div class="glass-card rounded-3xl p-8 group">
-                    <div class="flex justify-between items-start mb-8">
-                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg">
-                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        </div>
-                        <span class="text-blue-400 text-xs font-bold tracking-wider uppercase bg-blue-500/10 px-3 py-1.5 rounded-full border border-blue-500/20">FinTech</span>
-                    </div>
-                    <h3 class="text-3xl font-bold text-white mb-4">LoanVerse AI</h3>
-                    <p class="text-slate-400 mb-8 leading-relaxed font-light">
-                        An agentic sales workforce solution built to automate complex financial workflows and assist in dynamic client interactions at scale.
-                    </p>
-                    <a href="https://github.com/gajellijoeledwin" class="text-white font-medium inline-flex items-center group-hover:text-blue-400 transition-colors">
-                        View Source <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path></svg>
-                    </a>
-                </div>
-
-            </div>
+      <!-- Experience Card 2 -->
+      <div class="exp-card">
+        <div class="exp-header">
+          <div class="exp-role">Junior Developer</div>
+          <div class="exp-period">Jun 2022 – Dec 2023 · 1+ yr</div>
         </div>
-    </section>
-
-    <footer class="relative z-10 py-12 px-6 mt-12 border-t border-white/5">
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-            <p class="text-slate-500 text-sm font-light">© 2026 Joel Edwin. Building in the open.</p>
-            <div class="flex space-x-8 font-medium text-sm">
-                <a href="https://github.com/gajellijoeledwin" target="_blank" class="text-slate-400 hover:text-white transition-colors">GitHub</a>
-                <a href="https://www.linkedin.com/in/gajelli-joel-edwin/" target="_blank" class="text-slate-400 hover:text-white transition-colors">LinkedIn</a>
-            </div>
+        <div class="exp-company">Previous Company · Full-time</div>
+        <div class="exp-desc">
+          Building features and learning best practices in web development.
         </div>
-    </footer>
+        <ul class="exp-bullets">
+          <li><strong>Project 1:</strong> Description of project</li>
+          <li><strong>Project 2:</strong> Another project description</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="tag">JavaScript</span>
+          <span class="tag">React</span>
+          <span class="tag">MongoDB</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Skills ── -->
+  <section id="skills">
+    <div class="section-header">
+      <div class="section-label">skills</div>
+      <h2 class="section-title">$ cat tech-stack.txt</h2>
+    </div>
+    <div class="skills-grid">
+
+      <div class="skill-group">
+        <div class="skill-group-label">Frontend</div>
+        <div class="skill-tags">
+          <span class="skill-tag featured">React</span>
+          <span class="skill-tag featured">TypeScript</span>
+          <span class="skill-tag featured">Tailwind CSS</span>
+          <span class="skill-tag">Vue.js</span>
+          <span class="skill-tag">HTML / CSS</span>
+          <span class="skill-tag">JavaScript</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-label">Backend</div>
+        <div class="skill-tags">
+          <span class="skill-tag featured">Node.js</span>
+          <span class="skill-tag featured">Python</span>
+          <span class="skill-tag">Express</span>
+          <span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag">MongoDB</span>
+          <span class="skill-tag">REST APIs</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-label">DevOps / Tools</div>
+        <div class="skill-tags">
+          <span class="skill-tag featured">Git</span>
+          <span class="skill-tag featured">Docker</span>
+          <span class="skill-tag">AWS</span>
+          <span class="skill-tag">GitHub Actions</span>
+          <span class="skill-tag">Linux</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Contact ── -->
+  <section id="contact">
+    <div class="section-header">
+      <div class="section-label">contact</div>
+      <h2 class="section-title">$ ./contact.sh</h2>
+    </div>
+    <div class="contact-grid">
+
+      <a class="contact-card" href="https://github.com/gajellijoeledwin" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="#b668ff" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.544 2.914 1.19.092-.926.35-1.557.636-1.913-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.191 22 16.443 22 12.017 22 6.484 17.523 2 12 2z"/>
+        </svg>
+        <div class="contact-info">
+          <small>GitHub</small>
+          <span>gajellijoeledwin</span>
+        </div>
+      </a>
+
+      <a class="contact-card" href="https://linkedin.com/in/gajelli-joel-edwin" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="#0A66C2" xmlns="http://www.w3.org/2000/svg">
+          <rect width="24" height="24" rx="4" fill="#0A66C2"/>
+          <path d="M6.5 9.5H4v9h2.5v-9zM5.25 8.25a1.25 1.25 0 100-2.5 1.25 1.25 0 000 2.5zM20 13.5c0-2.5-1.3-4-3.4-4-1 0-1.9.5-2.3 1.3V9.5H11.8v9h2.5v-5c0-1.2.6-2 1.7-2 1 0 1.5.7 1.5 2v5H20v-5z" fill="white"/>
+        </svg>
+        <div class="contact-info">
+          <small>LinkedIn</small>
+          <span>gajelli-joel-edwin</span>
+        </div>
+      </a>
+
+      <a class="contact-card" href="mailto:gajellijoeledwin@gmail.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#b668ff" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="4" width="20" height="16" rx="2"/>
+          <path d="m22 7-10 5L2 7"/>
+        </svg>
+        <div class="contact-info">
+          <small>Email</small>
+          <span>gajellijoeledwin@gmail.com</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <footer>
+    <span>dev@portfolio:~$</span> &nbsp;Built with ♥ &nbsp;·&nbsp; Your City &nbsp;·&nbsp; 2026
+  </footer>
+
+</div><!-- #main -->
+
+<script>
+  // ─── Set browser-tab favicon via JS ───────
+  (function () {
+    const svgFav = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+      <polygon points="50,12 50,38 69,75 88,85" fill="white" stroke="#9B2FFF" stroke-width="3.5"/>
+      <polygon points="50,12 12,85 31,75 50,38" fill="white" stroke="#9B2FFF" stroke-width="3.5"/>
+      <polygon points="12,85 88,85 69,75 31,75" fill="white" stroke="#9B2FFF" stroke-width="3.5"/>
+      <polygon points="50,38 31,75 69,75" fill="#7B25FF"/>
+    </svg>`;
+    const link = document.createElement('link');
+    link.rel  = 'icon';
+    link.type = 'image/svg+xml';
+    link.href = 'data:image/svg+xml;base64,' + btoa(svgFav);
+    document.head.appendChild(link);
+  })();
+
+  // ─── Boot sequence ───────────────────────────────────────────────────────
+  const bootLines = [
+    `[<span class="ts">    0.000000</span>] DEVELOPER OS v1.0.0 LTS ·························· <span class="ok">[ OK ]</span>`,
+    `[<span class="ts">    0.052341</span>] Loading kernel modules ··························· <span class="ok">[ OK ]</span>`,
+    `[<span class="ts">    0.104782</span>] CPU: Multi-Core Processor — 4.8 GHz`,
+    `[<span class="ts">    0.157123</span>] Memory: 16 GB RAM initialized ··················· <span class="ok">[ OK ]</span>`,
+    `[<span class="ts">    0.209564</span>] Mounting /dev/portfolio ·························· <span class="ok">[ OK ]</span>`,
+    `[<span class="ts">    0.262005</span>] Starting Node.js runtime ························· <span class="ok">[ OK ]</span>`,
+    `[<span class="ts">    0.314446</span>] Loading React framework ·························· <span class="ok">[ OK ]</span>`,
+    `[<span class="ts">    0.366887</span>] Connecting Git repositories ····················· <span class="ok">[ OK ]</span>`,
+    `[<span class="ts">    0.419328</span>] Loading development tools ······················· <span class="ok">[ OK ]</span>`,
+    `[<span class="ts">    0.471769</span>] Activating deployment pipeline ···················· <span class="ok">[ OK ]</span>`,
+    `[<span class="ts">    0.524210</span>] Loading project portfolio ························· <span class="ok">[ OK ]</span>`,
+    `[<span class="ts">    0.576651</span>] All systems nominal. Welcome <span class="brand">DEVELOPER</span> ·· <span class="ok">[ OK ]</span>`,
+  ];
+
+  async function sleep(ms) {
+    return new Promise(r => setTimeout(r, ms));
+  }
+
+  async function runBoot() {
+    const linesEl = document.getElementById('boot-lines');
+    const logoEl  = document.getElementById('os-logo');
+    const bootEl  = document.getElementById('boot');
+
+    for (let i = 0; i < bootLines.length; i++) {
+      await sleep(i === 0 ? 300 : 420);
+      const div = document.createElement('div');
+      div.className = 'bl';
+      div.innerHTML = bootLines[i];
+      div.style.animationDelay = '0ms';
+      linesEl.appendChild(div);
+      linesEl.scrollTop = linesEl.scrollHeight;
+    }
+
+    await sleep(700);
+    linesEl.classList.add('dim');
+
+    await sleep(350);
+    logoEl.classList.add('visible');
+    await sleep(600);
+    logoEl.classList.add('pulse');
+
+    await sleep(2400);
+
+    bootEl.classList.add('fade-out');
+    document.getElementById('main').style.display = 'block';
+
+    await sleep(950);
+    bootEl.style.display = 'none';
+  }
+
+  window.addEventListener('load', runBoot);
+</script>
 
 </body>
 </html>
